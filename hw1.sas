@@ -12,8 +12,7 @@ Source  : Willems et al. (1997) and Schorling et al. (1997)
            Buckingham County, Virginia
           CDC BMI Guidelines:
           https://www.cdc.gov/bmi/adult-calculator/bmi-categories.html
-Author  :P. Tzavellas, p.tzavellas@med.uoa.gr
-
+Authors  :P. Tzavellas, p.tzavellas@med.uoa.gr
 Date    : March 2026
 ===========================================================================================*/
 
@@ -153,7 +152,7 @@ data hw1.diab2;
        1 = diabetic    (glyhb >  6.5)
        0 = non-diabetic(glyhb <= 6.5) */
     if      glyhb >  6.5 then diabetes = 1;
-    else if glyhb <= 6.5 then diabetes = 0;
+    else if glyhb > 0 then diabetes = 0;
     else                      diabetes = .;  /* missing */
     label diabetes = "Diabetes Status (1=Diabetic, 0=Non-Diabetic)";
 
@@ -241,7 +240,7 @@ run;
 /* --------------------------------------------------------
    Task 12: Grouped Boxplot of Height by Gender
    - Female: Gold fill, Diamond mean marker
-   - Male  : SteelBlue fill, Square mean marker
+   - Male  : #41B6B8 fill, Square mean marker
    - Legend: color swatch + mean shape separately
    Source: hw1.diab2
    Saved to: &classpath./hw1/GroupedBoxplot.pptx
@@ -254,7 +253,7 @@ data attrmap;
     id = "gender";
     value = "female"; fillcolor="Gold";      linecolor="Black";
                       markercolor="Black";   markersymbol="DiamondFilled"; output;
-    value = "male";   fillcolor="SteelBlue"; linecolor="Black";
+    value = "male";   fillcolor="#41B6B8"; linecolor="Black";
                       markercolor="Black";   markersymbol="SquareFilled";  output;
 run;
 
@@ -277,7 +276,7 @@ proc sgplot data=hw1.diab2 dattrmap=attrmap;
 
     /* Legend 1: shows color swatches */
     keylegend "box" /
-        title      = "Gender (Color)"
+        title      = "Gender"
         titleattrs = (family="Calibri" size=11pt weight=Bold color=Black)
         valueattrs = (family="Calibri" size=11pt color=Black)
         type       = fill
@@ -292,7 +291,7 @@ proc sgplot data=hw1.diab2 dattrmap=attrmap;
         valueattrs = (family="Calibri" size=11pt color=Black)
         type       = marker
         location   = outside
-        position   = bottomright
+        position   = bottom
         border;
 
     xaxis display    = (nolabel)
@@ -312,7 +311,7 @@ ods powerpoint close;
 /* --------------------------------------------------------
    Task 13: Boxplot of Height by Gender for each BMI category
    - Female: Gold fill, Diamond mean marker
-   - Male  : SteelBlue fill, Square mean marker
+   - Male  : #41B6B8 fill, Square mean marker
    - X-axis: BMI categories in order
    -------------------------------------------------------- */
 
@@ -337,7 +336,7 @@ data attrmap;
     id = "gender";
     value = "female"; fillcolor="Gold";      linecolor="Black";
                       markercolor="Black";   markersymbol="DiamondFilled"; output;
-    value = "male";   fillcolor="SteelBlue"; linecolor="Black";
+    value = "male";   fillcolor="#41B6B8"; linecolor="Black";
                       markercolor="Black";   markersymbol="SquareFilled";  output;
 run;
 
@@ -361,7 +360,7 @@ proc sgplot data=diab_plot dattrmap=attrmap;
 
     /* Legend 1: colors */
     keylegend "box" /
-        title      = "Gender (Color)"
+        title      = "Gender"
         titleattrs = (family="Calibri" size=11pt weight=Bold color=Black)
         valueattrs = (family="Calibri" size=11pt color=Black)
         type       = fill
@@ -376,7 +375,7 @@ proc sgplot data=diab_plot dattrmap=attrmap;
         valueattrs = (family="Calibri" size=11pt color=Black)
         type       = marker
         location   = outside
-        position   = bottomright
+        position   = bottom
         border;
 
     /* Force correct order on x-axis */
@@ -404,42 +403,50 @@ ods powerpoint close;
    Saved to: ~/hw1/diabetes_dist.png
    Size    : 6in width x 4in height
    -------------------------------------------------------- */
+/* ---- Define format ------------------------------------ */
+proc format;
+    value diabfmt
+        0 = "No"
+        1 = "Yes";
+run;
 
-/* ---- Step 1: Compute % frequency ----------------------- */
+/* ---- Step 1: Compute % frequency ---------------------- */
 proc freq data=hw1.diab2 noprint;
     tables diabetes / out=diab_dist;
 run;
 
-/* ---- Step 2: Format percent with % symbol -------------- */
+/* ---- Step 2: Format percent with % symbol ------------- */
 data diab_dist;
     set diab_dist;
     pct_label = cats(put(PERCENT, 8.1), "%");
+    format diabetes diabfmt.;   /* ← apply format here */
 run;
 
-/* ---- Step 3: Save as PNG ------------------------------- */
+/* ---- Step 3: Save as PNG ------------------------------ */
 ods listing gpath="&classpath./hw1/";
-
 ods graphics / reset
                imagename = "diabetes_dist"
                outputfmt = png
                width     = 6in
                height    = 4in;
 
-/* ---- Step 4: Plot -------------------------------------- */
+/* ---- Step 4: Plot ------------------------------------- */
 title "% Frequency Distribution of Diabetes";
 
 proc sgplot data=diab_dist;
 
-    vbar diabetes / response       = PERCENT
-                    group          = diabetes   /* ← different color per bar */
-                    groupdisplay   = cluster
-                    outlineattrs   = (color=Black)
-                    datalabel      = pct_label  /* ← shows "58.1%" */
+    format diabetes diabfmt.;   /* ← also apply in proc sgplot */
+
+    vbar diabetes / response     = PERCENT
+                    group        = diabetes
+                    groupdisplay = cluster
+                    outlineattrs = (color=Black)
+                    datalabel    = pct_label
                     datalabelattrs = (family="Calibri" size=10pt weight=Bold);
 
-    styleattrs datacolors = (SteelBlue Tomato);  /* ← 0=Blue, 1=Red */
+    styleattrs datacolors = (SteelBlue Tomato);
 
-    xaxis label      = "Diabetes Status (0=Non-Diabetic, 1=Diabetic)"
+    xaxis label      = "Diabetic (No/Yes)"
           labelattrs = (family="Calibri" size=11pt weight=Bold color=Black)
           valueattrs = (family="Calibri" size=11pt color=Black);
 
@@ -449,7 +456,6 @@ proc sgplot data=diab_dist;
           max        = 100
           grid
           gridattrs  = (color=GrayCC thickness=0.5);
-
 run;
 
 title;
@@ -457,67 +463,64 @@ ods graphics off;
 ods listing close;
 
 
-
 /* --------------------------------------------------------
    Task 15: Scatter plot of BMI vs Age by Diabetes status
    Saved to: ~/Biostatistics/hw1/Age_BMI.png
    Size    : 6in width x 4in height
    -------------------------------------------------------- */
+/* We create a character variable of diabetes to allow us change the 
+shape of diabetes and missing valus in the scatter*/
 
-/* ---- Attribute map: color + symbol per diabetes status - */
-data attrmap2;
-    length id $10 value $4 fillcolor $12 linecolor $12
-           markercolor $12 markersymbol $14;
-    id = "diabetes";
-    value = "0"; fillcolor="SteelBlue"; linecolor="SteelBlue";
-                 markercolor="SteelBlue"; markersymbol="CircleFilled"; output;
-    value = "1"; fillcolor="Red";       linecolor="Red";
-                 markercolor="Red";       markersymbol="SquareFilled"; output;
+data hw1.diab2;
+    set hw1.diab2;
+    length diab_char $8;
+    if      diabetes = 1 then diab_char = "Yes";
+    else if diabetes = 0 then diab_char = "No";
+    else                      diab_char = "Missing";
 run;
 
-/* ---- Save as PNG --------------------------------------- */
-ods listing gpath="&classpath./hw1/";
 
-ods graphics / reset
+/* Attribute map - coral/teal για consistency με Task 14 but with diab_char */
+data attrmap_diab;
+    length id $10 value $8 fillcolor $12 linecolor $12 
+           markercolor $12 markersymbol $15;
+    id = "diab_char";
+    value = "No";      fillcolor = "#2ABFBF"; linecolor = "#2ABFBF"; 
+                       markercolor = "#2ABFBF"; markersymbol = "trianglefilled"; output;
+    value = "Yes";     fillcolor = "#F4796B"; linecolor = "#F4796B"; 
+                       markercolor = "#F4796B"; markersymbol = "squarefilled";   output;
+    value = "Missing"; fillcolor = "#440154"; linecolor = "#440154"; 
+                       markercolor = "#440154"; markersymbol = "circlefilled";   output;
+run;
+title color = black height = 14pt bold
+      "BMI vs Age by Diabetes Status";
+
+ods listing gpath = "&classpath./hw1";
+ods graphics / reset = all;
+ods graphics / attrpriority = none /*so the symbols can change*/
                imagename = "Age_BMI"
-               outputfmt = png
+               imagefmt  = png
                width     = 6in
                height    = 4in;
 
-title "Scatter Plot of BMI vs Age by Diabetes Status";
-
-proc sgplot data=hw1.diab2 dattrmap=attrmap2;
-
-    scatter x=age y=BMI /
-        group        = diabetes
-        attrid       = diabetes
-        markerattrs  = (size=6)
-        transparency = 0.3;         /* slight transparency for overlapping points */
-
-    keylegend /
-        title      = "Diabetes"
-        titleattrs = (family="Calibri" size=11pt weight=Bold color=Black)
-        valueattrs = (family="Calibri" size=10pt color=Black)
-        location   = inside
-        position   = topright
-        border;
-
+proc sgplot data = hw1.diab2 dattrmap = attrmap_diab;
+    format diabetes diabfmt.;
+    scatter x = age y = BMI / group        = diab_char
+                               attrid      = diab_char
+                               markerattrs = (size = 5); 
     xaxis label      = "Age (years)"
-          labelattrs = (family="Calibri" size=11pt weight=Bold color=Black)
-          valueattrs = (family="Calibri" size=10pt color=Black)
-          grid
-          gridattrs  = (color=GrayCC thickness=0.5);
-
+          labelattrs = (size = 12 weight = bold color = black)
+          valueattrs = (size = 11 color = black);
     yaxis label      = "BMI (kg/m^2)"
-          labelattrs = (family="Calibri" size=11pt weight=Bold color=Black)
-          valueattrs = (family="Calibri" size=10pt color=Black)
-          grid
-          gridattrs  = (color=GrayCC thickness=0.5);
-
+          labelattrs = (size = 12 weight = bold color = black)
+          valueattrs = (size = 11 color = black);
+    keylegend / title      = "Diabetes"
+                titleattrs = (size = 12 weight = bold color = black)
+                valueattrs = (size = 11 color = black)
+                position   = right location = outside;
 run;
 
 title;
-ods graphics off;
 ods listing close;
 
 
@@ -565,7 +568,7 @@ run;
 ods excel close;
 
 /* ---- Step 4: Also print to results tab ----------------- */
-proc print data=hw1.Means noobs label;
+proc print data=hw1.Means label;
     format mean_age    8.3
            mean_bmi    8.3
            mean_chol   8.3
@@ -599,8 +602,3 @@ run;
 %computemetric(table=hw1.diab2,    variable=weight, metric=median);
 %computemetric(table=hw1.diab2,    variable=chol,   metric=sum);
 %computemetric(table=sashelp.cars, variable=MSRP,   metric=mean);
-
-
-
-
-
