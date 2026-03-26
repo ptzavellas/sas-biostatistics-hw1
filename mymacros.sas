@@ -42,7 +42,7 @@
 
     proc print data=_metric_ noobs label;
         var result;
-        format result 12.3;
+        format result 12.1;
         label result = "%upcase(&metric) of %upcase(&variable)";
         title "%upcase(&metric) of %upcase(&variable) in &table";
     run;

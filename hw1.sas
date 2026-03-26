@@ -12,7 +12,8 @@ Source  : Willems et al. (1997) and Schorling et al. (1997)
            Buckingham County, Virginia
           CDC BMI Guidelines:
           https://www.cdc.gov/bmi/adult-calculator/bmi-categories.html
-Authors  :P. Tzavellas, p.tzavellas@med.uoa.gr
+Authors  :1. P. Tzavellas, p.tzavellas@med.uoa.gr
+          2. C. Athanasakopoulos, xristosath@med.uoa.gr
 Date    : March 2026
 ===========================================================================================*/
 
@@ -61,7 +62,7 @@ libname hw1 "&classpath./hw1";
    Output  : hw1.diab_tzavellas
    -------------------------------------------------------- */
    
-   proc import datafile= "&classpath./hw1/data/diabetes.csv"
+   proc import datafile= "&classpath./hw1/diabetes.csv"
 				dbms = csv
 				out = hw1.diab_&name.
                 replace;
@@ -76,7 +77,6 @@ proc print data = hw1.diab_&name. (obs=3);
     title "First 3 Observations of hw1.diab_&name.";
 run;
 
-ods select variables;
 proc contents data = hw1.diab_&name.;
     title "Contents of hw1.diab_&name.";
 run;
@@ -286,7 +286,7 @@ proc sgplot data=hw1.diab2 dattrmap=attrmap;
 
     /* Legend 2: shows mean shapes */
     keylegend "box" /
-        title      = "Gender (Mean Shape)"
+        title      = "Mean Shape"
         titleattrs = (family="Calibri" size=11pt weight=Bold color=Black)
         valueattrs = (family="Calibri" size=11pt color=Black)
         type       = marker
@@ -341,10 +341,8 @@ data attrmap;
 run;
 
 /* ---- Step 3: Plot -------------------------------------- */
-title "Boxplot of Height by Gender and BMI Category";
+title "Height by Gender and BMI Category";
 
-ods powerpoint file = "&classpath./hw1/GroupedBoxplot2.pptx";
-ods graphics / width=30cm height=18cm;
 
 proc sgplot data=diab_plot dattrmap=attrmap;
 
@@ -370,7 +368,7 @@ proc sgplot data=diab_plot dattrmap=attrmap;
 
     /* Legend 2: mean shapes */
     keylegend "box" /
-        title      = "Gender (Mean Shape)"
+        title      = "Mean Shape"
         titleattrs = (family="Calibri" size=11pt weight=Bold color=Black)
         valueattrs = (family="Calibri" size=11pt color=Black)
         type       = marker
@@ -391,7 +389,6 @@ proc sgplot data=diab_plot dattrmap=attrmap;
 run;
 
 title;
-ods powerpoint close;
 
 
 
@@ -444,7 +441,7 @@ proc sgplot data=diab_dist;
                     datalabel    = pct_label
                     datalabelattrs = (family="Calibri" size=10pt weight=Bold);
 
-    styleattrs datacolors = (SteelBlue Tomato);
+    styleattrs datacolors = ("#41B6B8" Tomato);
 
     xaxis label      = "Diabetic (No/Yes)"
           labelattrs = (family="Calibri" size=11pt weight=Bold color=Black)
@@ -557,25 +554,17 @@ ods excel file="&classpath./hw1/means.xlsx"
           options(sheet_name="Means");
 
 proc print data=hw1.Means noobs label;
-    format mean_age    8.3
-           mean_bmi    8.3
-           mean_chol   8.3
-           mean_weight 8.3
-           mean_glyhb  8.3;
+    format mean_age    8.1
+           mean_bmi    8.1
+           mean_chol   8.1
+           mean_weight 8.1
+           mean_glyhb  8.1;
     title "Mean Values of Numerical Variables by Diabetes Status";
 run;
 
 ods excel close;
 
-/* ---- Step 4: Also print to results tab ----------------- */
-proc print data=hw1.Means label;
-    format mean_age    8.3
-           mean_bmi    8.3
-           mean_chol   8.3
-           mean_weight 8.3
-           mean_glyhb  8.3;
-    title "Mean Values of Numerical Variables by Diabetes Status";
-run;
+
 
 /* --------------------------------------------------------
    Task 17: Macro function to compute a metric for a 
