@@ -6,9 +6,9 @@ fundamental SAS programming concepts applied to the Diabetes dataset from
 Buckingham County, Virginia (Willems et al., 1997 & Schorling et al., 1997).
 
 ## Authors
--**P. Tzavellas** | petrostza1997@hotmail.com 
+- **P. Tzavellas** | petrostza1997@hotmail.com 
 Medical School, University of Athens
--**C. Athanasakopoulos** | xristos.athanasa@gmail.com
+- **C. Athanasakopoulos** | xristos.athanasa@gmail.com
 Medical School, University of Athens
 
 ## Dataset
