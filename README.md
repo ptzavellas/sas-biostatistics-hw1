@@ -5,8 +5,10 @@ Homework 1 for Introduction to Biostatistics using SAS Viya. This project covers
 fundamental SAS programming concepts applied to the Diabetes dataset from 
 Buckingham County, Virginia (Willems et al., 1997 & Schorling et al., 1997).
 
-## Author
-**P. Tzavellas** | p.tzavellas@med.uoa.gr  
+## Authors
+**P. Tzavellas** | petrostza1997@hotmail.com 
+Medical School, University of Athens
+**C. Athanasakopoulos** | xristos.athanasa@gmail.com
 Medical School, University of Athens
 
 ## Dataset
