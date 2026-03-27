@@ -47,7 +47,7 @@ sas-biostatistics-hw1/
 │   ├── diab_gender_dist.xlsx
 │   └── diab_BMI_cat_dist.xlsx
 ├── Presentation/
-│   ├──Presentation_hw1_March26.pdf
+│   └── Presentation_hw1_March26.pdf
 └── README.md
 ```
 
