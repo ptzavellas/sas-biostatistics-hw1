@@ -13,7 +13,7 @@ Source  : Willems et al. (1997) and Schorling et al. (1997)
           CDC BMI Guidelines:
           https://www.cdc.gov/bmi/adult-calculator/bmi-categories.html
 Authors  :1. P. Tzavellas, p.tzavellas@med.uoa.gr
-          2. C. Athanasakopoulos, xristosath@med.uoa.gr
+          2. C. Athanasakopoulos, xristos.athanasa@gmail.com , xristosath@med.uoa.gr
 Date    : March 2026
 ===========================================================================================*/
 
