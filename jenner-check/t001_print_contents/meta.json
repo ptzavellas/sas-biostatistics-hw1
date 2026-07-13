@@ -1,0 +1,7 @@
+{
+  "bundle": "t001_print_contents",
+  "source_file": "hw1.sas",
+  "source_blob_sha": "d96c7b5281b24ac4c8e4fdbb28a968a1ff2b6bac",
+  "source_commit": "4776a0751b624255c73261e580ce0d49c6df79b2",
+  "notes": "Task 8: PROC PRINT (obs=3) + PROC CONTENTS of the imported diabetes table. The Viya PROC IMPORT of hw1.diab_tzavellas is replaced by an inline DATA step reading a 45-row sample of the author's real diabetes.csv (columns used downstream: id chol glyhb age gender height weight). PRINT/CONTENTS unchanged."
+}

@@ -1,0 +1,7 @@
+{
+  "bundle": "t002_bmi_freq_means",
+  "source_file": "hw1.sas",
+  "source_blob_sha": "d96c7b5281b24ac4c8e4fdbb28a968a1ff2b6bac",
+  "source_commit": "4776a0751b624255c73261e580ce0d49c6df79b2",
+  "notes": "Tasks 9-10: label variables, derive BMI (lbs->kg, in->m), classify into CDC categories, flag diabetes from glyhb (>6.5), then PROC FREQ (BMI_cat, diabetes) and PROC MEANS (BMI). Source hw1.diab2 replaced by an inline DATA step over a 45-row sample of the author's real diabetes.csv. Formula, cut-points and PROCs unchanged."
+}

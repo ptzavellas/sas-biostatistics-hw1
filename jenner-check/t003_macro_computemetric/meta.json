@@ -1,0 +1,7 @@
+{
+  "bundle": "t003_macro_computemetric",
+  "source_file": "mymacros.sas",
+  "source_blob_sha": "5bd8016ccdf85e164a56e17168aa92a57b4625f7",
+  "source_commit": "4776a0751b624255c73261e580ce0d49c6df79b2",
+  "notes": "Task 17 / mymacros.sas: the %computemetric macro (metric/table/variable validation via OPEN + VARNUM, then PROC MEANS + reporting). Macro shipped verbatim; %include of the external mymacros.sas replaced by an inline copy of the same definition, and hw1.diab2 replaced by an inline DATA step over a 45-row sample of the author's real diabetes.csv. The four Task-17 calls (incl. sashelp.cars MSRP) are unchanged."
+}
