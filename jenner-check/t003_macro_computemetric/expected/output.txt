@@ -1,0 +1,19 @@
+MEAN of HEIGHT in diab2                                                 
+
+MEAN of HEIGHT
+          66.0
+
+                                               MEDIAN of WEIGHT in diab2                                                
+
+MEDIAN of WEIGHT
+           174.0
+
+                                                  SUM of CHOL in diab2                                                  
+
+SUM of CHOL
+     9183.0
+
+                                              MEAN of MSRP in sashelp.cars                                              
+
+MEAN of MSRP
+     24925.0

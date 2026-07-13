@@ -1,0 +1,32 @@
+First 3 Observations of diab_tzavellas                                         
+
+  Obs  gender    id  chol         glyhb  age  height  weight
+    1  female  1000   203  4.3099999428   46      62     121
+    2  female  1001   165  4.4400000572   29      64     218
+    3  female  1002   228  4.6399998665   58      61     256
+
+... 42 more observations (showing 3 of 45)
+
+                                               Contents of diab_tzavellas                                               
+
+
+PROC CONTENTS
+-------------------------------------------------------------------------------
+
+Data Set Name: diab_tzavellas
+Observations:  45
+Variables:     7
+
+Variables (in alphabetical order):
+
+  #  Variable  Type    Len  Format  Label
+---  --------  ----  -----  ------  -----
+  1  age        Num      8          
+  2  chol       Num      8          
+  3  gender    Char      6          
+  4  glyhb      Num      8          
+  5  height     Num      8          
+  6  id         Num      8          
+  7  weight     Num      8          
+
+-------------------------------------------------------------------------------

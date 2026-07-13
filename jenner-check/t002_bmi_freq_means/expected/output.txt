@@ -1,0 +1,25 @@
+Frequency of BMI Category and Diabetes Status                                      
+
+                                                   The FREQ Procedure
+
+                                                           Cumulative    Cumulative
+BMI Category (CDC Guidelines)    Frequency    Percent     Frequency      Percent
+--------------------------------------------------------------------------------------
+Normal Weight                           10     22.22           10        22.22
+Obese                                   18     40.00           28        62.22
+Overweight                              15     33.33           43        95.56
+Underweight                              2      4.44           45       100.00
+
+                                                                          Cumulative    Cumulative
+Diabetes Status (1=Diabetic, 0=Non-Diabetic)    Frequency    Percent     Frequency      Percent
+-----------------------------------------------------------------------------------------------------
+0                                                      39     88.64           39        88.64
+1                                                       5     11.36           44       100.00
+                                             Descriptive Statistics for BMI                                             
+
+                                                  The MEANS Procedure
+
+ Variable  Label                           N           Mean        Minimum        Maximum
+ ----------------------------------------------------------------------------------------
+ BMI       Body Mass Index (kg/m^2)       45     28.5655674     15.2049644     48.3708287
+ ----------------------------------------------------------------------------------------

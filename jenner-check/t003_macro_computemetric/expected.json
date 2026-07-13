@@ -1,0 +1,14 @@
+{
+  "_captured_at": "2026-07-13T07:00:00Z",
+  "_captured_run_id": "r_af74928875b948d4a96817f9573ee3ff",
+  "status": "ok",
+  "exit_code": 0,
+  "log_contains": [
+    "NOTE: The MEAN of HEIGHT in diab2 is: 66.022222222",
+    "NOTE: The MEDIAN of WEIGHT in diab2 is: 174",
+    "NOTE: The SUM of CHOL in diab2 is: 9183",
+    "NOTE: The MEAN of MSRP in sashelp.cars is: 24925"
+  ],
+  "log_does_not_contain": ["ERROR:", "[JENNER-ERROR"],
+  "diagnostics": {"parse_warnings": [], "runtime_warnings": []}
+}
